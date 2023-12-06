@@ -20,7 +20,7 @@ public class Handler : DelegatingHandler
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation(_guidProvider.GuidValue);
+        _logger.LogInformation("Injected provider value {value}", _guidProvider.GuidValue);
 
         return Task.FromResult(new HttpResponseMessage());
     }
