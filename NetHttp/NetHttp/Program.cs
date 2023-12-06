@@ -92,4 +92,5 @@ await SocketHttp.Examples();
 // await clientOneNew.GetFromJsonAsync<WeatherForecast[]>("https://localhost:7036/weatherforecast", camelCase);
 // await clientOneNew.GetFromJsonAsync<WeatherForecast[]>("https://localhost:7036/weatherforecast", camelCase);
 
-// await HttpClientEx.StreamExample(httpClient);
+var httpClient = new HttpClient();
+await HttpClientEx.StreamExample(httpClient);
