@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using NetHttp;
 using NetHttp.Server;
 
@@ -7,6 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<GuidProvider>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<Handler>();
+builder.Services.AddHttpClient("Mario")
+    .AddHttpMessageHandler<Handler>();
 
 var app = builder.Build();
 
@@ -48,6 +55,14 @@ app.MapGet("/weatherforecastStream",  () =>
         .ToArray();
 
     return AsyncEnumerableReturn(forecast);
+});
+
+app.MapGet("/handler", async ([FromServices] IHttpClientFactory httpClientFactory) =>
+{
+    var client = httpClientFactory.CreateClient("Mario");
+
+    await client.GetAsync("https://localhost:7036/weatherforecast");
+    await client.GetAsync("https://localhost:7036/weatherforecast");
 });
 
 app.Run();

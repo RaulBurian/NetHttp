@@ -50,6 +50,8 @@ public static class SocketHttp
         var responseBuffer = responseStream.GetBuffer();
         var indexOfBodyStart = responseBuffer.AsSpan().IndexOf(endHeadersSearchBytes) + endHeadersSearchBytes.Length;
 
+        Console.WriteLine(Encoding.UTF8.GetString(responseBuffer.AsSpan()[..(int)responseStream.Length]));
+
         return JsonSerializer.Deserialize<T>(responseBuffer.AsSpan()[indexOfBodyStart..(int)responseStream.Length], SerializerOptions)!;
     }
 
@@ -90,6 +92,8 @@ public static class SocketHttp
 
         var responseBuffer = responseStream.GetBuffer();
         var indexOfBodyStart = responseBuffer.AsSpan().IndexOf(endHeadersSearchBytes) + endHeadersSearchBytes.Length;
+
+        Console.WriteLine(Encoding.UTF8.GetString(responseBuffer.AsSpan()[..(int)responseStream.Length]));
 
         return JsonSerializer.Deserialize<T>(responseBuffer.AsSpan()[indexOfBodyStart..(int)responseStream.Length], SerializerOptions)!;
     }
